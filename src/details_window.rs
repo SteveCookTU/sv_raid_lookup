@@ -275,7 +275,7 @@ impl DetailsWindow {
             format!("Base Type: {}", TYPES[type_1])
         };
 
-        let image_url = format!("https://raw.githubusercontent.com/Lincoln-LM/sv-live-map/master/resources/sprites/{}{}.png", encounter.species, if encounter.form != 0 { format!("-{}", encounter.form) } else { "".to_string() });
+        let image_url = format!("https://raw.githubusercontent.com/Lincoln-LM/sv-live-map/master/resources/sprites/{}{}.png", encounter.dev_id, if encounter.form != 0 { format!("-{}", encounter.form) } else { "".to_string() });
 
         let image = Arc::new(Mutex::new(None));
 

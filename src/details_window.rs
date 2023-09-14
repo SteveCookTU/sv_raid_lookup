@@ -2,7 +2,11 @@ use eframe::egui::Context;
 use egui_extras::RetainedImage;
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
-use sv_raid_reader::{personal_table, ExtraActionTrigger, ExtraActionType, GemType, Gender, ItemTable, IvType, PersonalInfo, RaidEncounter, Seikaku, ShinyType, Tokusei, ABILITIES, FIXED_ITEMS, ITEMS, LOTTERY_ITEMS, MOVES, NATURES, SPECIES, TYPES, ItemSubject};
+use sv_raid_reader::{
+    personal_table, ExtraActionTrigger, ExtraActionType, GemType, Gender, ItemSubject, ItemTable,
+    IvType, PersonalInfo, RaidEncounter, Seikaku, ShinyType, Tokusei, ABILITIES, FIXED_ITEMS,
+    ITEMS, LOTTERY_ITEMS, MOVES, NATURES, SPECIES, TYPES,
+};
 
 #[derive(Clone)]
 pub struct DetailsWindow {
@@ -97,7 +101,7 @@ impl DetailsWindow {
         };
 
         let ivs = match encounter.iv_type {
-            IvType::Random | IvType::VNum  => format!("Flawless IVs: {}", encounter.flawless_ivs),
+            IvType::Random | IvType::VNum => format!("Flawless IVs: {}", encounter.flawless_ivs),
             IvType::Value => {
                 let ivs = encounter
                     .ivs

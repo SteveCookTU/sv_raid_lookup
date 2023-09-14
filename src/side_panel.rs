@@ -1,30 +1,31 @@
 use crate::app::SVRaidLookup;
 use crate::encounter_grid::encounter_grid;
+use crate::get_encounters;
 use eframe::egui;
 use eframe::egui::{Context, Widget};
-use sv_raid_reader::{
-    DIFFICULTY_01, DIFFICULTY_02, DIFFICULTY_03, DIFFICULTY_04, DIFFICULTY_05, DIFFICULTY_06,
-    SPECIES,
-};
+use sv_raid_reader::SPECIES;
 
 pub fn draw_side_panel(app: &mut SVRaidLookup, ctx: &Context) {
     egui::SidePanel::left("left_panel").show(ctx, |ui| {
         egui::Grid::new("filters").num_columns(2).show(ui, |ui| {
             ui.label("Stars:");
             ui.vertical_centered_justified(|ui| {
+                ui.horizontal(|ui| {
+                    if ui.radio_value(&mut app.map, 0, "Paldea").clicked() {
+                        app.encounters = get_encounters(app.map, app.star_level);
+                        app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
+                    }
+                    if ui.radio_value(&mut app.map, 1, "Kitakami").clicked() {
+                        app.encounters = get_encounters(app.map, app.star_level);
+                        app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
+                    }
+                });
                 if egui::DragValue::new(&mut app.star_level)
                     .clamp_range(1..=6)
                     .ui(ui)
                     .changed()
                 {
-                    app.encounters = match app.star_level {
-                        2 => DIFFICULTY_02.to_vec(),
-                        3 => DIFFICULTY_03.to_vec(),
-                        4 => DIFFICULTY_04.to_vec(),
-                        5 => DIFFICULTY_05.to_vec(),
-                        6 => DIFFICULTY_06.to_vec(),
-                        _ => DIFFICULTY_01.to_vec(),
-                    };
+                    app.encounters = get_encounters(app.map, app.star_level);
                     app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
                 };
             });

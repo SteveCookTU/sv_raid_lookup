@@ -14,6 +14,7 @@ use sv_raid_reader::{ItemTable, RaidEncounter, DIFFICULTY_01, SPECIES};
 
 pub struct SVRaidLookup {
     pub star_level: u8,
+    pub map: u8,
     pub species_filter: String,
     pub encounters: Vec<RaidEncounter>,
     pub event_encounters: Arc<Mutex<Vec<RaidEncounter>>>,
@@ -26,6 +27,7 @@ impl Default for SVRaidLookup {
     fn default() -> Self {
         Self {
             star_level: 1,
+            map: 0,
             species_filter: String::new(),
             encounters: {
                 let mut enc = DIFFICULTY_01.to_vec();

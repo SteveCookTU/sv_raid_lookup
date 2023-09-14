@@ -1,39 +1,48 @@
 use crate::app::SVRaidLookup;
 use crate::encounter_grid::encounter_grid;
+use crate::get_encounters;
 use eframe::egui;
 use eframe::egui::Context;
-use sv_raid_reader::{
-    DIFFICULTY_01, DIFFICULTY_02, DIFFICULTY_03, DIFFICULTY_04, DIFFICULTY_05, DIFFICULTY_06,
-    SPECIES,
-};
+use sv_raid_reader::SPECIES;
 
 pub fn mobile_top_bar(app: &mut SVRaidLookup, ctx: &Context) {
     egui::TopBottomPanel::top("menu_bar").show(ctx, |ui| {
         ui.add_space(5.0);
         ui.horizontal(|ui| {
+            ui.label("Map: ");
+            if ui.radio_value(&mut app.map, 0, "Paldea").clicked() {
+                app.encounters = get_encounters(app.map, app.star_level);
+                app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
+            };
+            if ui.radio_value(&mut app.map, 1, "Kitakami").clicked() {
+                app.encounters = get_encounters(app.map, app.star_level);
+                app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
+            };
+        });
+        ui.horizontal(|ui| {
             ui.label("Stars: ");
             if ui.radio_value(&mut app.star_level, 1, "1").clicked() {
-                app.encounters = DIFFICULTY_01.to_vec();
+                app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
             if ui.radio_value(&mut app.star_level, 2, "2").clicked() {
-                app.encounters = DIFFICULTY_02.to_vec();
+                app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
             if ui.radio_value(&mut app.star_level, 3, "3").clicked() {
-                app.encounters = DIFFICULTY_03.to_vec();
+                app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
             if ui.radio_value(&mut app.star_level, 4, "4").clicked() {
-                app.encounters = DIFFICULTY_04.to_vec();
+                app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
             if ui.radio_value(&mut app.star_level, 5, "5").clicked() {
-                app.encounters = DIFFICULTY_05.to_vec();
+                app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
             if ui.radio_value(&mut app.star_level, 6, "6").clicked() {
-                app.encounters = DIFFICULTY_06.to_vec();
+                app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
         });

@@ -106,10 +106,10 @@ impl DetailsWindow {
                 let ivs = encounter
                     .ivs
                     .iter()
-                    .map(|i| format!("{:0>2}", i))
+                    .map(|i| format!("{i:0>2}"))
                     .collect::<Vec<_>>()
                     .join("/");
-                format!("IVs: {}", ivs)
+                format!("IVs: {ivs}")
             }
         };
 
@@ -120,7 +120,7 @@ impl DetailsWindow {
                 .map(|i| format!("{:0>2}", i))
                 .collect::<Vec<_>>()
                 .join("/");
-            format!("EVs: {}", evs)
+            format!("EVs: {evs}")
         };
 
         let total_time = Duration::from_secs(encounter.game_limit as u64);
@@ -163,15 +163,15 @@ impl DetailsWindow {
                 ExtraActionTrigger::Time => {
                     let time = total_time.as_secs_f32()
                         - (total_time.as_secs_f32() * (f32::from(action.value) / 100.0)).ceil();
-                    format!("{}s", time)
+                    format!("{time}s")
                 }
             };
             let move_name = action.move_no.map(|i| MOVES[i as usize]).unwrap_or("");
-            extra_actions[i].0 = format!("At: {}", value,);
+            extra_actions[i].0 = format!("At: {value}");
             extra_actions[i].1 = if action_type == "Move" {
-                format!("Move: {}", move_name)
+                format!("Move: {move_name}")
             } else {
-                format!("{}", action_type)
+                format!("{action_type}")
             };
         }
 
@@ -262,7 +262,7 @@ impl DetailsWindow {
 
         let stats_str = base_stats
             .into_iter()
-            .map(|i| format!("{:0>2}", i))
+            .map(|i| format!("{i:0>2}"))
             .collect::<Vec<_>>()
             .join(" - ");
 
@@ -283,7 +283,7 @@ impl DetailsWindow {
 
         let image = Arc::new(Mutex::new(None));
 
-        let image_request = ehttp::Request::get(&image_url);
+        let image_request = ehttp::Request::get(image_url);
 
         let clone = image.clone();
         let ctx = ctx.clone();
@@ -308,18 +308,18 @@ impl DetailsWindow {
                 format!(" - {}", MOVES[encounter.reusable_moves[2] as usize]),
                 format!(" - {}", MOVES[encounter.reusable_moves[3] as usize]),
             ],
-            gem_type: format!("Tera Type: {}", gem_type),
-            ability: format!("Ability: {}", ability),
-            nature: format!("Nature: {}", nature),
-            gender: format!("Gender: {}", gender),
-            iv_type: format!("IV Type: {}", iv_type),
+            gem_type: format!("Tera Type: {gem_type}"),
+            ability: format!("Ability: {ability}"),
+            nature: format!("Nature: {nature}"),
+            gender: format!("Gender: {gender}"),
+            iv_type: format!("IV Type: {iv_type}"),
             ivs,
             evs,
             hp: format!("HP: {}", encounter.hp_coef),
-            base_stats: format!("Base Stats: {}", stats_str),
+            base_stats: format!("Base Stats: {stats_str}"),
             base_type,
             shield_hp_trigger: format!("Shield Trigger HP: {}%", encounter.shield_hp_trigger),
-            shield_time_trigger: format!("Shield Trigger Time: {}s", shield_time_trigger),
+            shield_time_trigger: format!("Shield Trigger Time: {shield_time_trigger}s"),
             shield_cancel_damage: format!(
                 "Shield Cancel Damage: {}%",
                 encounter.shield_cancel_damage
@@ -338,8 +338,7 @@ impl DetailsWindow {
                 encounter.second_shield_hp_trigger
             ),
             second_shield_time_trigger: format!(
-                "Second Shield Trigger Time: {}s",
-                second_shield_time_trigger
+                "Second Shield Trigger Time: {second_shield_time_trigger}s",
             ),
             second_shield_damage_rate: format!(
                 "Second Shield Damage Rate: {}%",

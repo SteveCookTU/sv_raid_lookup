@@ -19,6 +19,10 @@ pub fn draw_side_panel(app: &mut SVRaidLookup, ctx: &Context) {
                         app.encounters = get_encounters(app.map, app.star_level);
                         app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
                     }
+                    if ui.radio_value(&mut app.map, 2, "Indigo").clicked() {
+                        app.encounters = get_encounters(app.map, app.star_level);
+                        app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
+                    }
                 });
                 if egui::DragValue::new(&mut app.star_level)
                     .clamp_range(1..=6)
@@ -38,7 +42,7 @@ pub fn draw_side_panel(app: &mut SVRaidLookup, ctx: &Context) {
         ui.add_space(15.0);
         ui.vertical_centered_justified(|ui| {
             if ui.button("Load Latest Event Data").clicked() {
-                let request = ehttp::Request::get("https://citrusbolt.net/bcat/v/latest/raid/files/raid_enemy_array_1_3_0");
+                let request = ehttp::Request::get("https://citrusbolt.net/bcat/v/latest/raid/files/raid_enemy_array_3_0_0");
                 let clone = app.event_encounters.clone();
                 ehttp::fetch(request, move |response| {
                     if let Ok(response) = response {
@@ -50,7 +54,7 @@ pub fn draw_side_panel(app: &mut SVRaidLookup, ctx: &Context) {
                     }
                 });
 
-                let request = ehttp::Request::get("https://citrusbolt.net/bcat/v/latest/raid/files/fixed_reward_item_array_1_3_0");
+                let request = ehttp::Request::get("https://citrusbolt.net/bcat/v/latest/raid/files/fixed_reward_item_array_3_0_0");
                 let clone = app.fixed_event_item.clone();
                 ehttp::fetch(request, move |response| {
                     if let Ok(response) = response {
@@ -62,7 +66,7 @@ pub fn draw_side_panel(app: &mut SVRaidLookup, ctx: &Context) {
                     }
                 });
 
-                let request = ehttp::Request::get("https://citrusbolt.net/bcat/v/latest/raid/files/lottery_reward_item_array_1_3_0");
+                let request = ehttp::Request::get("https://citrusbolt.net/bcat/v/latest/raid/files/lottery_reward_item_array_3_0_0");
                 let clone = app.lottery_event_items.clone();
                 ehttp::fetch(request, move |response| {
                     if let Ok(response) = response {

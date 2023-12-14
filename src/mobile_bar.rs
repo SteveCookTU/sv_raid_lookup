@@ -18,6 +18,10 @@ pub fn mobile_top_bar(app: &mut SVRaidLookup, ctx: &Context) {
                 app.encounters = get_encounters(app.map, app.star_level);
                 app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
             };
+            if ui.radio_value(&mut app.map, 2, "Indigo").clicked() {
+                app.encounters = get_encounters(app.map, app.star_level);
+                app.encounters.sort_by_key(|e| SPECIES[e.species as usize]);
+            }
         });
         ui.horizontal(|ui| {
             ui.label("Stars: ");
